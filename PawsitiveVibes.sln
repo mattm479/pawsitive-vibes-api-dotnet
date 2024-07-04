@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawsitiveVibesAPI", "PawsitiveVibesAPI\PawsitiveVibesAPI.csproj", "{95F0A0C9-EF15-4CA0-8BFF-8ECE94D3B2C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PawsitiveVibesAPI.Tests", "PawsitiveVibesAPI.Tests\PawsitiveVibesAPI.Tests.csproj", "{15C80166-5286-4183-B3FF-02321BF0A1DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{95F0A0C9-EF15-4CA0-8BFF-8ECE94D3B2C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95F0A0C9-EF15-4CA0-8BFF-8ECE94D3B2C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95F0A0C9-EF15-4CA0-8BFF-8ECE94D3B2C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95F0A0C9-EF15-4CA0-8BFF-8ECE94D3B2C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15C80166-5286-4183-B3FF-02321BF0A1DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15C80166-5286-4183-B3FF-02321BF0A1DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15C80166-5286-4183-B3FF-02321BF0A1DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15C80166-5286-4183-B3FF-02321BF0A1DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
