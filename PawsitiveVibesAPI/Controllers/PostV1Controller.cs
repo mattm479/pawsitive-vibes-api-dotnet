@@ -15,9 +15,22 @@ public class PostV1Controller(ILogger<PostV1Controller> logger, IPostService pos
 
     [Authorize]
     [HttpGet("{userId:length(36)}/feed")]
-    public async Task<ActionResult<FeedResponse>> GetFeedAsync([FromRoute] string userId, CancellationToken cancellationToken)
+    public async Task<ActionResult<FeedResponse>> GetFeedForUserAsync([FromRoute] string userId, CancellationToken cancellationToken)
     {
         FeedResponse response = await _postService.GetFeedForUserAsync(userId, cancellationToken);
+        if (!string.IsNullOrEmpty(response.ErrorMessage))
+        {
+            return BadRequest(response.ErrorMessage);
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpGet("{userId:length(36)}")]
+    public async Task<ActionResult<FeedResponse>> GetFeedByUserIdAsync([FromRoute] string userId, CancellationToken cancellationToken)
+    {
+        FeedResponse response = await _postService.GetFeedByUserIdAsync(userId, cancellationToken);
         if (!string.IsNullOrEmpty(response.ErrorMessage))
         {
             return BadRequest(response.ErrorMessage);
