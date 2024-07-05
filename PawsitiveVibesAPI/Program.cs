@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using PawsitiveVibesAPI.Helpers;
 using PawsitiveVibesAPI.Models;
 using PawsitiveVibesAPI.Repositories;
 using PawsitiveVibesAPI.Services;
@@ -54,6 +55,14 @@ public class Program
 
         app.UseAuthentication();
         app.UseAuthorization();
+
+        app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+        );
+
+        app.UseMiddleware<JwtMiddleware>();
 
         app.MapControllers();
 

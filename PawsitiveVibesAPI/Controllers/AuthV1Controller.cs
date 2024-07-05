@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PawsitiveVibesAPI.Models.Requests;
 using PawsitiveVibesAPI.Models.Responses;
 using PawsitiveVibesAPI.Services;
@@ -53,6 +54,19 @@ public class AuthV1Controller(ILogger<AuthV1Controller> logger, IAuthService aut
     public async Task<ActionResult<ForgotPasswordResponse>> ForgotPasswordAsync([FromBody] ForgotPasswordRequest request, CancellationToken cancellationToken)
     {
         ForgotPasswordResponse response = await _authService.ForgotPasswordAsync(request, cancellationToken);
+        if (!string.IsNullOrEmpty(response.ErrorMessage))
+        {
+            return BadRequest(response.ErrorMessage);
+        }
+
+        return Ok(response);
+    }
+
+    [Authorize]
+    [HttpPost("user-profile/{userId:length(36)}")]
+    public async Task<ActionResult<UserProfileResponse>> GetUserProfileByIdAsync([FromRoute] string userId, CancellationToken cancellationToken)
+    {
+        UserProfileResponse response = await _authService.GetUserProfileByIdAsync(userId, cancellationToken);
         if (!string.IsNullOrEmpty(response.ErrorMessage))
         {
             return BadRequest(response.ErrorMessage);

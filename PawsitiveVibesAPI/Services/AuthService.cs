@@ -11,11 +11,13 @@ public interface IAuthService
     Task<LoginResponse> LoginAsync(LoginRequest request, CancellationToken cancellationToken);
     Task<ForgotUsernameResponse> ForgotUsernameAsync(ForgotUsernameRequest request, CancellationToken cancellationToken);
     Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request, CancellationToken cancellationToken);
+    Task<UserProfileResponse> GetUserProfileByIdAsync(string userId, CancellationToken cancellationToken);
 }
 
-public class AuthService(ILogger<AuthService> logger, IUserRepository userRepository, JwtService jwtService) : IAuthService
+public class AuthService(ILogger<AuthService> logger, IPostRepository postRepository, IUserRepository userRepository, JwtService jwtService) : IAuthService
 {
     private readonly ILogger<AuthService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    private readonly IPostRepository _postRepository = postRepository ?? throw new ArgumentNullException(nameof(postRepository));
     private readonly IUserRepository _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     private readonly JwtService _jwtService = jwtService ?? throw new ArgumentNullException(nameof(jwtService));
 
@@ -75,7 +77,20 @@ public class AuthService(ILogger<AuthService> logger, IUserRepository userReposi
 
         return new ForgotPasswordResponse(temporaryPassword: temporaryPassword);
     }
-    
+
+    public async Task<UserProfileResponse> GetUserProfileByIdAsync(string userId, CancellationToken cancellationToken)
+    {
+        User user = await _userRepository.FindUserByIdAsync(userId, cancellationToken);
+        if (user == null)
+        {
+            return new UserProfileResponse("User does not exist");
+        }
+
+        IEnumerable<Post> posts = await _postRepository.GetFeedByUserIdAsync(userId, cancellationToken);
+        
+        return new UserProfileResponse(user, posts);
+    }
+
     private static string GenerateRandomPassword()
     {
         const int numbersLength = 12;
